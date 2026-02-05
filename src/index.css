@@ -1,0 +1,95 @@
+/* src/index.css */
+:root {
+  --color-bg: #0a0a0a;
+  --color-text: #ffffff;
+  --color-primary: #ff00cc; /* Fucsia */
+  --color-secondary: #00ccff; /* Celeste */
+  --color-accent: #1e1e1e; /* Gris oscuro para cards, fondos secundarios */
+  --color-hover: #ff66cc;
+  --navbar-height: 60px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  scroll-behavior: smooth;
+}
+
+.App {
+  max-width: 1200px;
+  margin: auto;
+  padding: 1rem;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--navbar-height);
+  z-index: 1000;
+  background-color: #111; /* fondo oscuro para navbar */
+}
+
+main {
+  padding-top: var(--navbar-height);
+  background-color: #000;
+  color: white;
+}
+
+.home-section {
+  position: relative;
+  min-height: 100vh;
+}
+
+.lanyard-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.home-content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+}
+
+/* Este bloque agrega el offset para evitar que el navbar tape el contenido al hacer scroll con anclas */
+#home,
+#skills,
+#projects,
+#contact {
+  scroll-margin-top: var(--navbar-height);
+}
+
+.section {
+  padding-top: var(--navbar-height);
+  min-height: 100vh;
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* Asegura que el canvas de partículas esté detrás, ocupe toda la pantalla y no bloquee eventos */
+canvas#tsparticles {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: -1 !important;
+  pointer-events: none !important;
+  background-color: transparent !important;
+}
+

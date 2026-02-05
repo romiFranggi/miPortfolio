@@ -1,0 +1,133 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start; /* alinea arriba */
+  min-height: 100vh;
+  padding: 4rem 2rem 2rem 2rem; /* más espacio arriba */
+  background: transparent;
+  text-align: left;
+  max-width: 700px;
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+
+.home-container h1 {
+  font-size: 4rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem; /* un poco más espacio abajo */
+}
+
+.home-container h2 {
+  font-size: 2rem; /* tamaño que prefieras */
+  color: var(--color-text);
+  margin-bottom: 1.5rem; /* espacio debajo para separar del párrafo */
+}
+
+
+.home-container p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  color: var(--color-text);
+  margin-bottom: 4rem; /* espacio debajo del párrafo para separar del botón */
+}
+
+.btn-download-cv {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  color: black;
+  background-color: var(--color-secondary);
+  border: 2px solid black;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+  margin-top: 1rem; /* separa el botón del párrafo */
+}
+
+/* resto igual */
+
+
+.btn-download-cv {
+  display: inline-block;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  color: black;
+  background-color: var(--color-secondary); /* celeste */
+  border: 2px solid black;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  border: 2px solid var(--color-primary); /* borde fucsia */
+  box-shadow: 0 0 5px var(--color-primary); /* resplandor del borde */
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+}
+
+.btn-download-cv:hover {
+  transform: scale(1.1); /* agranda el botón */
+  background-color: #65f593; /* un celeste más claro para iluminar */
+   border-color: #33ffff;
+  color: black;
+   box-shadow: 0 0 15px #33e4ff, 0 0 30px #5adbe6;
+  
+}
+
+.btn-download-cv::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 60%; /* un poco más ancho */
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 0, 204, 0) 0%,
+    rgba(246, 246, 246, 0.989) 50%, /* brillo fucsia más fuerte */
+    rgba(255, 0, 204, 0) 100%
+  );
+  transform: skewX(-20deg);
+  transition: none;
+  filter: drop-shadow(0 0 8px #ff00cc); /* brillo extra */
+}
+
+.btn-download-cv:hover::before {
+  animation: shine 0.8s forwards;
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+
+
+
+.typewriter {
+  overflow: hidden; /* oculta el texto que aún no "aparece" */
+  border-right: 3px solid var(--color-primary); /* cursor */
+  white-space: nowrap;
+  animation: typing 3s steps(20, end), blink-caret 0.75s step-end infinite;
+  font-size: 3rem;
+  color: var(--color-primary);
+  margin-bottom: 1rem;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent }
+  50% { border-color: var(--color-primary) }
+}

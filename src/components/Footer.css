@@ -1,0 +1,10 @@
+.footer {
+  background-color: #111;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  width: 100%;         /* Usa 100% en vez de 100vw para evitar overflow */
+  box-sizing: border-box;
+  user-select: none;
+}
