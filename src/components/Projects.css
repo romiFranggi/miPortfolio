@@ -25,7 +25,7 @@
 }
 
 .project-card:hover {
-  box-shadow: 0 0 15px var(--color-primary, #ff00cc);
+  box-shadow: 0 0 12px rgba(212, 129, 159, 0.35);
 }
 
 .project-card h3 {
@@ -37,7 +37,7 @@
 .project-card a {
   display: inline-block;
   margin-bottom: 1rem;
-  color: var(--color-primary, #ff00cc);
+  color: var(--color-primary, #d4819f);
   text-decoration: none;
   font-weight: 600;
 }

@@ -34,6 +34,78 @@ export default function Lanyard({ position = [0, 0, 30], gravity = [0, -40, 0], 
   );
 }
 
+// Debe coincidir con los @media de index.css, Home.css y Lanyard.css
+const STACKED_LAYOUT_QUERY = '(max-width: 767px), (max-width: 1100px) and (orientation: portrait)';
+
+const CARD_PINK = '#d4819f'; // mismo rosa que --color-primary
+const CARD_FONT = 'Montserrat';
+
+// Redibuja "Click!" y el nombre sobre la imagen original de la tarjeta (1678x1677 px)
+function drawCard(ctx, img) {
+  ctx.drawImage(img, 0, 0);
+
+  // Tapa el "Click !" viejo con un parche de cuero liso, sin tocar el borde del círculo
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(590, 30, 260, 240);
+  ctx.arc(412, 450, 381, 0, Math.PI * 2);
+  ctx.clip('evenodd');
+  ctx.drawImage(img, 300, 1300, 260, 240, 590, 30, 260, 240);
+  ctx.restore();
+
+  ctx.save();
+  ctx.translate(728, 128);
+  ctx.rotate(0.5);
+  ctx.font = `700 64px ${CARD_FONT}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 10;
+  ctx.strokeStyle = '#000';
+  ctx.strokeText('Click!', 0, 0);
+  ctx.fillStyle = CARD_PINK;
+  ctx.fillText('Click!', 0, 0);
+  ctx.restore();
+
+  // Nombre bajo la foto
+  ctx.fillStyle = '#000';
+  ctx.fillRect(50, 885, 725, 185);
+  ctx.font = `600 104px ${CARD_FONT}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillStyle = CARD_PINK;
+  ctx.fillText('Romina', 412, 980);
+}
+
+function useCardTexture(baseMap) {
+  const [cardTexture, setCardTexture] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    let created;
+    Promise.all([document.fonts.load(`700 64px ${CARD_FONT}`), document.fonts.load(`600 104px ${CARD_FONT}`)])
+      .catch(() => {})
+      .then(() => {
+        if (cancelled) return;
+        const img = baseMap.image;
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width;
+        canvas.height = img.height;
+        drawCard(canvas.getContext('2d'), img);
+        created = new THREE.CanvasTexture(canvas);
+        created.flipY = baseMap.flipY;
+        created.colorSpace = baseMap.colorSpace;
+        setCardTexture(created);
+      });
+    return () => {
+      cancelled = true;
+      created?.dispose();
+    };
+  }, [baseMap]);
+
+  return cardTexture;
+}
+
 function Band({ maxSpeed = 50, minSpeed = 0 }) {
   const band = useRef(), fixed = useRef(), j1 = useRef(), j2 = useRef(), j3 = useRef(), card = useRef();
   const vec = new THREE.Vector3(), ang = new THREE.Vector3(), rot = new THREE.Vector3(), dir = new THREE.Vector3();
@@ -42,11 +114,13 @@ function Band({ maxSpeed = 50, minSpeed = 0 }) {
   // Carga los archivos usando rutas absolutas desde public/
   const { nodes, materials } = useGLTF('/assets/lanyard/card.glb');
   const texture = useTexture('/assets/lanyard/lanyard.png');
+  const cardTexture = useCardTexture(materials.base.map);
 
   const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
   const [isSmall, setIsSmall] = useState(() => typeof window !== 'undefined' && window.innerWidth < 1024);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.matchMedia(STACKED_LAYOUT_QUERY).matches);
 
   useRopeJoint(fixed, j1, [[0, 0, 0], [0, 0, 0], 1]);
   useRopeJoint(j1, j2, [[0, 0, 0], [0, 0, 0], 1]);
@@ -63,6 +137,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }) {
   useEffect(() => {
     const handleResize = () => {
       setIsSmall(window.innerWidth < 1024);
+      setIsMobile(window.matchMedia(STACKED_LAYOUT_QUERY).matches);
     };
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
@@ -96,7 +171,7 @@ function Band({ maxSpeed = 50, minSpeed = 0 }) {
   curve.curveType = 'chordal';
   texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
 
-  const xOffset = 2; // o el valor que necesites
+  const xOffset = isMobile ? 0 : 2; // en celular la tarjeta va centrada debajo del texto
 
   return (
     <>
@@ -129,16 +204,18 @@ function Band({ maxSpeed = 50, minSpeed = 0 }) {
             }}
 
           >
-            <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial
-                map={materials.base.map}
-                map-anisotropy={16}
-                clearcoat={1}
-                clearcoatRoughness={0.15}
-                roughness={0.9}
-                metalness={0.8}
-              />
-            </mesh>
+            {cardTexture && (
+              <mesh geometry={nodes.card.geometry}>
+                <meshPhysicalMaterial
+                  map={cardTexture}
+                  map-anisotropy={16}
+                  clearcoat={1}
+                  clearcoatRoughness={0.15}
+                  roughness={0.9}
+                  metalness={0.8}
+                />
+              </mesh>
+            )}
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
           </group>

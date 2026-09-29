@@ -2,10 +2,10 @@
 :root {
   --color-bg: #0a0a0a;
   --color-text: #ffffff;
-  --color-primary: #ff00cc; /* Fucsia */
-  --color-secondary: #00ccff; /* Celeste */
+  --color-primary: #d4819f; /* Rosa suave */
+  --color-secondary: #7fb3d5; /* Celeste suave */
   --color-accent: #1e1e1e; /* Gris oscuro para cards, fondos secundarios */
-  --color-hover: #ff66cc;
+  --color-hover: #e0a1b8;
   --navbar-height: 60px;
 }
 
@@ -93,3 +93,22 @@ canvas#tsparticles {
   background-color: transparent !important;
 }
 
+
+/* Celular: el texto va arriba y el lanyard debajo, en vez de superpuestos */
+@media (max-width: 767px), (max-width: 1100px) and (orientation: portrait) {
+  .home-section {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .home-section > .lanyard-wrapper {
+    position: relative;
+    order: 2;
+    height: 600px;
+  }
+
+  .section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}

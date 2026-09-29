@@ -26,7 +26,7 @@
 }
 
 .contact-form button {
-  background-color: var(--color-primary, #ff00cc);
+  background-color: var(--color-primary, #d4819f);
   color: white;
   border: none;
   padding: 0.85rem;
@@ -37,11 +37,11 @@
 }
 
 .contact-form button:hover {
-  background-color: #e600b8;
+  background-color: #bf6d8b;
 }
 
 .contact-info a {
-  color: var(--color-primary, #ff00cc);
+  color: var(--color-primary, #d4819f);
   text-decoration: none;
 }
 

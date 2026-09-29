@@ -35,7 +35,7 @@ export function Navbar() {
             textTransform: 'capitalize',
             transition: 'color 0.3s',
           }}
-          onMouseEnter={(e) => (e.target.style.color = 'cyan')}
+          onMouseEnter={(e) => (e.target.style.color = 'var(--color-secondary)')}
           onMouseLeave={(e) => (e.target.style.color = 'white')}
         >
           {sec}
