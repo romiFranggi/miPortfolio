@@ -39,6 +39,7 @@ const STACKED_LAYOUT_QUERY = '(max-width: 767px), (max-width: 1100px) and (orien
 
 const CARD_PINK = '#d4819f'; // mismo rosa que --color-primary
 const CARD_FONT = 'Montserrat';
+const NAME_FONT = 'Fraunces'; // misma fuente que "Software developer.", sin itálica
 
 // Redibuja "Click!" y el nombre sobre la imagen original de la tarjeta (1678x1677 px)
 function drawCard(ctx, img) {
@@ -69,8 +70,10 @@ function drawCard(ctx, img) {
 
   // Nombre bajo la foto
   ctx.fillStyle = '#000';
-  ctx.fillRect(50, 885, 725, 185);
-  ctx.font = `600 104px ${CARD_FONT}`;
+  ctx.beginPath();
+  ctx.roundRect(50, 885, 725, 185, 18);
+  ctx.fill();
+  ctx.font = `500 104px ${NAME_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillStyle = CARD_PINK;
@@ -83,7 +86,7 @@ function useCardTexture(baseMap) {
   useEffect(() => {
     let cancelled = false;
     let created;
-    Promise.all([document.fonts.load(`700 64px ${CARD_FONT}`), document.fonts.load(`600 104px ${CARD_FONT}`)])
+    Promise.all([document.fonts.load(`700 64px ${CARD_FONT}`), document.fonts.load(`500 104px ${NAME_FONT}`)])
       .catch(() => {})
       .then(() => {
         if (cancelled) return;
