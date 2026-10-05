@@ -31,7 +31,9 @@ export function Navbar() {
             background: 'transparent',
             border: 'none',
             cursor: 'pointer',
-            fontSize: '1rem',
+            fontFamily: "'DM Sans', sans-serif",
+            fontSize: '17px',
+            fontWeight: 500,
             textTransform: 'capitalize',
             transition: 'color 0.3s',
           }}

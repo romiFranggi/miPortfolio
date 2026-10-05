@@ -7,43 +7,148 @@
   padding: 4rem 2rem 2rem 2rem; /* más espacio arriba */
   background: transparent;
   text-align: left;
-  max-width: 700px;
+  max-width: min(780px, 90%);
   position: relative;
   z-index: 1;
   pointer-events: auto;
 }
 
-.home-container {
-  max-width: min(700px, 90%);
+/* ---------- Bloque estilo editor ---------- */
+
+.code-block {
+  --gutter: 2.75rem; /* ancho de la columna de números */
+  position: relative;
+  margin-bottom: 3rem; /* espacio antes de los botones */
 }
 
-
-
-.home-container h1 {
-  font-size: 4rem;
-  color: var(--color-primary);
-  margin-bottom: 1rem; /* un poco más espacio abajo */
+/* línea finita al costado de los números, como el margen de un editor */
+.code-block::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: var(--gutter);
+  width: 1px;
+  background-color: #2a2a30;
 }
 
-.home-container h2 {
-  font-size: 2rem; /* tamaño que prefieras */
-  color: var(--color-text);
-  margin-bottom: 1.5rem; /* espacio debajo para separar del párrafo */
+.code-line {
+  display: flex;
+  align-items: baseline; /* el número queda alineado con la primera línea del texto */
 }
 
-
-.home-container p {
-  font-size: 1.2rem;
-  max-width: 700px;
-  color: var(--color-text);
-  margin-bottom: 4rem; /* espacio debajo del párrafo para separar del botón */
+.code-line + .code-line {
+  margin-top: 0.9rem;
 }
+
+.line-number {
+  flex: 0 0 var(--gutter);
+  padding-right: 1rem;
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: #4e4e57;
+  user-select: none;
+}
+
+.code-line > :not(.line-number) {
+  min-width: 0;
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+/* 01 · Prompt */
+.code-prompt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: #8a8a93;
+}
+
+.prompt-user {
+  color: #d4799e;
+}
+
+/* 02 · Título */
+.home-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.75rem;
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 5vw, 60px);
+  line-height: 1.15;
+  color: #d4799e;
+}
+
+.code-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  font-weight: 400;
+  color: #8a8a93;
+}
+
+/* 03 · Subtítulo */
+.home-subtitle {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(1.5rem, 3.5vw, 38px);
+  line-height: 1.2;
+  color: #ffffff;
+}
+
+/* 04 · Comentario */
+.code-comment {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 16px;
+  color: #8a8a93;
+}
+
+.comment-slashes {
+  color: #d4799e;
+}
+
+/* 05 / 06 · Párrafos */
+.home-paragraph {
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  font-size: clamp(1rem, 2.5vw, 19px);
+  line-height: 1.6;
+  color: #e6e6e6;
+}
+
+/* ---------- Efecto máquina de escribir ---------- */
+
+.typewriter {
+  display: inline-block;
+  overflow: hidden; /* oculta el texto que aún no "aparece" */
+  white-space: nowrap;
+  vertical-align: bottom;
+  border-right: 3px solid #d4799e; /* cursor */
+  padding-right: 0.1em;
+  animation: typing 3s steps(23, end), blink-caret 0.75s step-end infinite;
+}
+
+/* se anima max-width para que el </h1> acompañe al texto mientras se escribe */
+@keyframes typing {
+  from { max-width: 0; }
+  to { max-width: 14em; }
+}
+
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #d4799e; }
+}
+
+/* ---------- Botones ---------- */
 
 .btn-download-cv {
   display: inline-block;
   padding: 0.65rem 1.4rem;
-  margin-top: 1rem; /* separa el botón del párrafo */
+  margin-top: 1rem;
   margin-right: 0.75rem;
+  font-family: 'DM Sans', sans-serif;
   font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.02em;
@@ -61,39 +166,6 @@
   border-color: rgba(255, 255, 255, 0.7);
 }
 
-.typewriter {
-  overflow: hidden; /* oculta el texto que aún no "aparece" */
-  border-right: 3px solid var(--color-primary); /* cursor */
-  white-space: nowrap;
-  animation: typing 3s steps(20, end), blink-caret 0.75s step-end infinite;
-  font-size: 3rem;
-  color: var(--color-primary);
-  margin-bottom: 1rem;
-}
-
-@keyframes typing {
-  from { width: 0 }
-  to { width: 100% }
-}
-
-@keyframes blink-caret {
-  0%, 100% { border-color: transparent }
-  50% { border-color: var(--color-primary) }
-}
-
-.home-container h1 {
-  font-size: clamp(2rem, 6vw, 4rem);
-}
-
-.home-container h2 {
-  font-size: clamp(1.2rem, 4vw, 2rem);
-}
-
-.home-container p {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  max-width: 100%;
-}
-
 @media (max-width: 767px), (max-width: 1100px) and (orientation: portrait) {
   .home-container {
     min-height: auto;
@@ -101,15 +173,31 @@
     padding: 2.5rem 1.25rem 0;
   }
 
+  .code-block {
+    --gutter: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .line-number {
+    padding-right: 0.6rem;
+    font-size: 12px;
+  }
+
+  .code-line > :not(.line-number) {
+    padding-left: 0.85rem;
+  }
+
+  .code-prompt,
+  .code-comment,
+  .code-tag {
+    font-size: 14px;
+  }
+
   /* el efecto de máquina de escribir no permite cortar la línea, así que en celular se desactiva */
   .typewriter {
     white-space: normal;
     border-right: none;
     animation: none;
-  }
-
-  .home-container p {
-    margin-bottom: 1.5rem;
   }
 
   .btn-download-cv {

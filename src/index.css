@@ -81,6 +81,13 @@ main {
   padding-right: 2rem;
 }
 
+/* Skills ocupa exactamente una pantalla debajo del navbar; el scroll-margin ya deja el espacio
+   del navbar, así que el padding-top extra la empujaba hacia abajo */
+#skills.section {
+  padding-top: 0;
+  min-height: auto;
+}
+
 /* Asegura que el canvas de partículas esté detrás, ocupe toda la pantalla y no bloquee eventos */
 canvas#tsparticles {
   position: fixed !important;

@@ -1,5 +1,10 @@
 .skills {
-  padding: 50px 20px;
+  /* ocupa una pantalla (menos el navbar) para que entren todas las filas sin scrollear */
+  min-height: calc(100vh - var(--navbar-height));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2rem 20px;
   text-align: center;
   background-color: #111;
   color: white;
@@ -7,20 +12,48 @@
 
 .skills h2 {
   font-size: 2rem;
-  margin-bottom: 30px;
+  margin-bottom: clamp(1rem, 3vh, 2rem);
+}
+
+.skills-categories {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.6rem, 1.6vh, 1rem);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* nombre de la categoría a la izquierda, tarjetas a la derecha */
+.skill-row {
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+/* mismo estilo que el comentario del inicio */
+.skill-category {
+  margin: 0;
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: #8a8a93;
+}
+
+.skill-category-slashes {
+  color: #d4799e;
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 20px;
-  max-width: 1000px;
-  margin: auto;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .skill-card {
   background-color: #333;
-  padding: 15px;
+  padding: clamp(8px, 1.2vh, 12px) 8px;
   border-radius: 10px;
   transition: transform 0.2s ease, background-color 0.2s ease;
   display: flex;
@@ -29,17 +62,45 @@
 }
 
 .skill-card img {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 10px;
+  width: clamp(28px, 4.5vh, 40px);
+  height: clamp(28px, 4.5vh, 40px);
+  object-fit: contain;
+  margin-bottom: 6px;
 }
 
 .skill-card p {
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
+  line-height: 1.2; /* nombres largos como "Entity Framework" pasan a dos líneas */
 }
 
 .skill-card:hover {
   transform: translateY(-5px);
   background-color: #444;
+}
+
+/* tablets y celulares: la categoría pasa arriba de sus tarjetas */
+@media (max-width: 900px) {
+  .skills {
+    min-height: auto;
+  }
+
+  .skill-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .skills-categories {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .skills-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .skill-category {
+    font-size: 14px;
+  }
 }
